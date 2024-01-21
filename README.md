@@ -12,3 +12,4 @@ cargo loco start
 ```
 
 After the server starts, open your web browser and navigate to http://127.0.0.1:3000 to access the chat rooms.
+Acess from brower from external IP will need to change localhost to IP/FQDN in frontend/src/App.jsx and rebuild frotned vite(pnpm build).
