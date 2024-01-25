@@ -1417,8 +1417,9 @@ dependencies = [
 
 [[package]]
 name = "loco-rs"
-version = "0.2.2"
-source = "git+https://github.com/loco-rs/loco?branch=socket#1d26a250eeb01fc4ba1dc3a12e76e2061590e34c"
+version = "0.2.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "e3ebffd061e690e450ec380ae7c40263fdd898e18c92da475ec14179f7ff2ddf"
 dependencies = [
  "argon2",
  "async-trait",

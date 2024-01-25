@@ -9,7 +9,7 @@ edition = "2021"
 
 [dependencies]
 
-loco-rs = { git = "https://github.com/loco-rs/loco", branch = "socket", default-features = false, features = [
+loco-rs = { version = "0.2.3", default-features = false, features = [
   "cli",
   "channels",
 ] }

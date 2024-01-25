@@ -1,7 +1,5 @@
 # Chat Rooms With Loco
 
-
-
 In this guide, we will walk through the process of creating chat rooms using Loco and [socketioxide](https://github.com/Totodore/socketioxide). The example website is derived from the [socketioxide example]((https://github.com/Totodore/socketioxide/tree/main/examples)).
 
 
