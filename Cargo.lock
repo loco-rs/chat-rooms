@@ -420,6 +420,9 @@ name = "bytes"
 version = "1.5.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a2bd12c1caf447e69cd4528f47f94d203fd2582878ecb9e9465484c4148a8223"
+dependencies = [
+ "serde",
+]
 
 [[package]]
 name = "camino"
@@ -813,13 +816,14 @@ checksum = "e2153bd83ebc09db15bcbdc3e2194d901804952e3dc96967e1cd3b0c5c32d112"
 
 [[package]]
 name = "engineioxide"
-version = "0.10.1"
+version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "610253fc8536aa6b02c5a1ea09d3d32f4ec090bee9fcd877768bd2114d5fe149"
+checksum = "bc76e79b0c318bbff227b003843c56d5fc50b43276441d162124166f4cbacc80"
 dependencies = [
- "base64 0.21.7",
+ "base64 0.22.1",
  "bytes",
- "futures",
+ "futures-core",
+ "futures-util",
  "http",
  "http-body",
  "http-body-util",
@@ -829,6 +833,7 @@ dependencies = [
  "rand",
  "serde",
  "serde_json",
+ "smallvec",
  "thiserror",
  "tokio",
  "tokio-tungstenite",
@@ -1452,8 +1457,7 @@ dependencies = [
 [[package]]
 name = "loco-rs"
 version = "0.5.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "99f53f783a0ee12fb70d93b8c0b19dc327a52c6d3e659654b7adb1dd47cb816e"
+source = "git+https://github.com/loco-rs/loco.git#f3cc57af916d0cef7e61c0d4e2bf5aa3bcdcb2b0"
 dependencies = [
  "argon2",
  "async-trait",
@@ -2483,12 +2487,14 @@ dependencies = [
 
 [[package]]
 name = "socketioxide"
-version = "0.10.1"
+version = "0.13.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b1e3eb9502d5e53d8c2c82e7b06ae8aea0fc0b7fe5048d14a1e761fb04ba9bc5"
+checksum = "178953184593e92c3f58d0d3eda74865c520b6fc05f80dc6c99bb235e39f400a"
 dependencies = [
+ "bytes",
  "engineioxide",
- "futures",
+ "futures-core",
+ "futures-util",
  "http",
  "http-body",
  "hyper",
