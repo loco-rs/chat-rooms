@@ -6,9 +6,11 @@ import {RoomMsgsList} from "./components/RoomMsgsList.jsx";
 import {MsgSubmitBox} from "./components/MsgSubmitBox.jsx";
 import {rooms} from "./utils/rooms.js";
 import {TransitiveSidebar} from "./components/sidebar/transitive/TransitiveSidebar.jsx";
-import dotenv from "dotenv";
-dotenv.config();
 
+
+console.log("WebSocket URL:");
+
+console.log("WebSocket URL:", import.meta.env.REACT_APP_WS_URL);
 function App() {
   const [messages, setMessages] = useState([]);
   const [currentRoom, setCurrentRoom] = useState(rooms[0]);
@@ -28,7 +30,7 @@ function App() {
 
     onceRef.current = true;
 
-    const socket = io(process.env.REACT_APP_WS_URL);
+    const socket = io(import.meta.env.REACT_APP_WS_URL);
     setSocket(socket);
 
     socket.on("connect", () => {
