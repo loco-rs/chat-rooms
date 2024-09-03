@@ -6,6 +6,8 @@ import {RoomMsgsList} from "./components/RoomMsgsList.jsx";
 import {MsgSubmitBox} from "./components/MsgSubmitBox.jsx";
 import {rooms} from "./utils/rooms.js";
 import {TransitiveSidebar} from "./components/sidebar/transitive/TransitiveSidebar.jsx";
+import dotenv from "dotenv";
+dotenv.config();
 
 function App() {
   const [messages, setMessages] = useState([]);
@@ -26,7 +28,7 @@ function App() {
 
     onceRef.current = true;
 
-    const socket = io("ws://localhost:3000");
+    const socket = io(process.env.REACT_APP_WS_URL);
     setSocket(socket);
 
     socket.on("connect", () => {
