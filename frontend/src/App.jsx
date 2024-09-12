@@ -7,10 +7,6 @@ import {MsgSubmitBox} from "./components/MsgSubmitBox.jsx";
 import {rooms} from "./utils/rooms.js";
 import {TransitiveSidebar} from "./components/sidebar/transitive/TransitiveSidebar.jsx";
 
-
-console.log("WebSocket URL:");
-
-console.log("WebSocket URL:", import.meta.env.REACT_APP_WS_URL);
 function App() {
   const [messages, setMessages] = useState([]);
   const [currentRoom, setCurrentRoom] = useState(rooms[0]);
