@@ -9,4 +9,4 @@ cargo loco start
 
 ```
 
-After the server starts, open your web browser and navigate to http://127.0.0.1:3000 to access the chat rooms.
+After the server starts, open your web browser and navigate to http://127.0.0.1:5150 to access the chat rooms.

@@ -1,15 +1,15 @@
+// use crate::channels;
+use crate::initializers;
 use async_trait::async_trait;
 use loco_rs::{
-    app::{AppContext, Hooks},
+    app::{AppContext, Hooks, Initializer},
+    bgworker::Queue,
     boot::{create_app, BootResult, StartMode},
-    controller::{channels::AppChannels, AppRoutes},
+    controller::AppRoutes,
     environment::Environment,
     task::Tasks,
-    worker::Processor,
     Result,
 };
-
-use crate::channels;
 
 pub struct App;
 #[async_trait]
@@ -32,21 +32,20 @@ impl Hooks for App {
         create_app::<Self>(mode, environment).await
     }
 
-    fn routes(ctx: &AppContext) -> AppRoutes {
-        AppRoutes::empty()
-            .prefix("/api")
-            .add_app_channels(Self::register_channels(ctx))
+    fn routes(_ctx: &AppContext) -> AppRoutes {
+        AppRoutes::empty().prefix("/api")
     }
 
-    fn register_channels(_ctx: &AppContext) -> AppChannels {
-        let messages = channels::state::MessageStore::default();
+    async fn initializers(_ctx: &AppContext) -> Result<Vec<Box<dyn Initializer>>> {
+        let initializers: Vec<Box<dyn Initializer>> =
+            vec![Box::new(initializers::socket::ChatInitializer)];
 
-        let channels: AppChannels = AppChannels::builder().with_state(messages).into();
-        channels.register.ns("/", channels::application::on_connect);
-        channels
+        Ok(initializers)
     }
 
-    fn connect_workers<'a>(_p: &'a mut Processor, _ctx: &'a AppContext) {}
+    async fn connect_workers(_ctx: &AppContext, _queue: &Queue) -> Result<()> {
+        Ok(())
+    }
 
     fn register_tasks(_tasks: &mut Tasks) {}
 }
