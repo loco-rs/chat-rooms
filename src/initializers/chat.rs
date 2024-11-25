@@ -10,6 +10,8 @@ use socketioxide::{
 use std::sync::{atomic::AtomicUsize, Arc};
 use tower::ServiceBuilder;
 use tower_http::cors::CorsLayer;
+
+#[allow(clippy::module_name_repetitions)]
 pub struct ChatInitializer;
 
 #[derive(Deserialize, Serialize, Debug, Clone)]
