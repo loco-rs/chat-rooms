@@ -3,7 +3,7 @@
 # Application logging configuration
 logger:
   # Enable or disable logging.
-  enable: true
+  enable: false
   # Enable pretty backtrace (sets RUST_BACKTRACE=1)
   pretty_backtrace: true
   # Log level, options: trace, debug, info, warn or error.
@@ -81,7 +81,7 @@ database:
   # Run migration up when application loaded
   auto_migrate: true
   # Truncate database when application loaded. This is a dangerous operation, make sure that you using this flag only on dev environments or test mode
-  dangerously_truncate: false
+  dangerously_truncate: true
   # Recreating schema when application loaded.  This is a dangerous operation, make sure that you using this flag only on dev environments or test mode
   dangerously_recreate: false
 
@@ -90,6 +90,6 @@ auth:
   # JWT authentication
   jwt:
     # Secret key for token generation and verification
-    secret: lBDFKDFHXhNXUcJ1obtE
+    secret: 4DRI5Iq069PX6uScCpK9
     # Token expiration time in seconds
     expiration: 604800 # 7 days

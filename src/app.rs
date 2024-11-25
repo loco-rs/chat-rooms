@@ -1,14 +1,20 @@
-// use crate::channels;
-use crate::initializers;
 use async_trait::async_trait;
 use loco_rs::{
     app::{AppContext, Hooks, Initializer},
-    bgworker::Queue,
+    bgworker::{BackgroundWorker, Queue},
     boot::{create_app, BootResult, StartMode},
     controller::AppRoutes,
+    db::{self, truncate_table},
     environment::Environment,
     task::Tasks,
     Result,
+};
+use migration::Migrator;
+use sea_orm::DatabaseConnection;
+use std::path::Path;
+
+use crate::{
+    controllers, initializers, models::_entities::users, tasks, workers::downloader::DownloadWorker,
 };
 
 pub struct App;
@@ -29,23 +35,34 @@ impl Hooks for App {
     }
 
     async fn boot(mode: StartMode, environment: &Environment) -> Result<BootResult> {
-        create_app::<Self>(mode, environment).await
-    }
-
-    fn routes(_ctx: &AppContext) -> AppRoutes {
-        AppRoutes::empty().prefix("/api")
+        create_app::<Self, Migrator>(mode, environment).await
     }
 
     async fn initializers(_ctx: &AppContext) -> Result<Vec<Box<dyn Initializer>>> {
-        let initializers: Vec<Box<dyn Initializer>> =
-            vec![Box::new(initializers::socket::ChatInitializer)];
-
-        Ok(initializers)
+        Ok(vec![
+            Box::new(initializers::view_engine::ViewEngineInitializer),
+            Box::new(initializers::chat::ChatInitializer),
+        ])
     }
 
-    async fn connect_workers(_ctx: &AppContext, _queue: &Queue) -> Result<()> {
+    fn routes(_ctx: &AppContext) -> AppRoutes {
+        AppRoutes::with_default_routes() // controller routes below
+            .add_route(controllers::auth::routes())
+    }
+    async fn connect_workers(ctx: &AppContext, queue: &Queue) -> Result<()> {
+        queue.register(DownloadWorker::build(ctx)).await?;
+        Ok(())
+    }
+    fn register_tasks(tasks: &mut Tasks) {
+        tasks.register(tasks::seed::SeedData);
+    }
+    async fn truncate(db: &DatabaseConnection) -> Result<()> {
+        truncate_table(db, users::Entity).await?;
         Ok(())
     }
 
-    fn register_tasks(_tasks: &mut Tasks) {}
+    async fn seed(db: &DatabaseConnection, base: &Path) -> Result<()> {
+        db::seed::<users::ActiveModel>(db, &base.join("users.yaml").display().to_string()).await?;
+        Ok(())
+    }
 }
