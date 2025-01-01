@@ -2,8 +2,9 @@
 
 [Loco](https://loco.rs) is a web and API framework running on Rust.
 
-This is the **SaaS starter** which includes a `User` model and authentication based on JWT.
-It also include configuration sections that help you pick either a frontend or a server-side template set up for your fullstack server.
+THis is a chatroom example to show how websockets are implemented.
+
+Note that this is not a regular WebSocket application, you'll need to use socket.io on the client side to get this to work. Socket.io supports long-polling fallbacks, rooms, and other things that raw WebSockets don't support. See [Axum websocket example](https://github.com/tokio-rs/axum/blob/main/examples/websockets/src/main.rs) for inspiration for building a pure WebSocket application.
 
 
 ## Quick Start
